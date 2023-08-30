@@ -14,6 +14,7 @@ Shape transform::shift(int m, int n, int k)
 		shape.x6 += m; shape.y6 += n; shape.z6 += k;
 		shape.x7 += m; shape.y7 += n; shape.z7 += k;
 		shape.x8 += m; shape.y8 += n; shape.z8 += k;
+		shape.z1 += k; shape.z2 += k; shape.z3 += k; shape.z4 += k;
 	case Shape::sqr:
 		shape.x3 += m; shape.y3 += n;
 		shape.x4 += m; shape.y4 += n;
@@ -94,6 +95,7 @@ Shape transform::scale(int s)
 		shape.x6 /= s; shape.y6 /= s; shape.z6 /= s;
 		shape.x7 /= s; shape.y7 /= s; shape.z7 /= s;
 		shape.x8 /= s; shape.y8 /= s; shape.z8 /= s;
+		shape.z1 /= s; shape.z2 /= s; shape.z3 /= s; shape.z4 /= s;
 	case Shape::sqr:
 		shape.x3 /= s; shape.y3 /= s;
 		shape.x4 /= s; shape.y4 /= s;
