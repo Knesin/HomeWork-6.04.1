@@ -75,12 +75,12 @@ Shape transform::scaleZ(int e)
 		shape.z6 *= e;
 		shape.z7 *= e;
 		shape.z8 *= e;
-	case Shape::sqr:
 		shape.z3 *= e;
 		shape.z4 *= e;
-	case Shape::line:
 		shape.z1 *= e;
 		shape.z2 *= e;
+	case Shape::sqr:
+	case Shape::line:
 		break;
 	}
 	return shape;
