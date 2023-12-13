@@ -1,63 +1,45 @@
 #define _USE_MATH_DEFINES
 #include"shape.h"
 #include<cmath>
-Shape::Shape(int _type, int _x1, int _y1, int _z1, int _x2, int _y2, int _z2, int _x3, int _y3, int _z3, int _x4, int _y4, int _z4, int _x5, int _y5, int _z5, int _x6, int _y6, int _z6, int _x7, int _y7, int _z7, int _x8, int _y8, int _z8)
-{
-	type = _type;
-	// заполн¤ем координаты фигуры
-	switch (type)
-	{
-	case line: 
-		x1 = _x1; y1 = _y1;
-		x2 = _x2; y2 = _y2;
-		square = 0;// считаем площадь фигуры
-		volume = 0;// считаем объем фигуры
-		break;
-	case sqr:
-		x1 = _x1; y1 = _y1;
-		x2 = _x2; y2 = _y2;
-		x3 = _x3; y3 = _y3;
-		x4 = _x4; y4 = _y4;
-		int a = abs(x1 - x2);
-		int b = abs(y1 - y2);
-		square = a * b;// считаем площадь фигуры
-		volume = 0;// считаем объем фигуры
-		break;
-	case cube:
-		x1 = _x1; y1 = _y1; z1 = _z1;
-		x2 = _x2; y2 = _y2; z2 = _z2;
-		x3 = _x3; y3 = _y3; z3 = _z3;
-		x4 = _x4; y4 = _y4; z4 = _z4;
-		x5 = _x5; y5 = _y5; z5 = _z5;
-		x6 = _x6; y6 = _y6; z6 = _z6; 
-		x7 = _x7; y7 = _y7; z7 = _z7;
-		x8 = _x8; y8 = _y8; z8 = _z8;		
-		int c = abs(z1 - z2);
-		square = 2 * a * b + 2 * a * c + 2 * b * c;// считаем площадь фигуры		
-		volume = a * b * c;// считаем объем фигуры
-		break;
-	default:
-		break;
-	}
-}
 
-Shape::Shape(int type, int _x1, int _y1, double R, double H)
+Shape::Shape(int type): type_ (static_cast<Shape_type>(type))
+{};
+
+Shape::Shape(Shape_type type) : type_(type)
+{};
+
+Line::Line(int x1, int y1, int x2, int y2) : Shape(line), x1_(x1), y1_(y1), x2_(x2), y2_(y2)
+{}
+
+Sqr::Sqr(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) :Shape(sqr), x1_(x1), y1_(y1), x2_(x2), y2_(y2),
+x3_(x3), y3_(y3), x4_(x4), y4_(y4)
 {
-	x1 = _x1; y1 = _y1;
-	radius = R;
-	// заполн¤ем координаты фигуры
-	switch (type)
-	{
-	case circle:
-		square = M_PI * R * R;// считаем площадь фигуры		
-		volume = 0;// считаем объем фигуры
-		break;
-	case cylinder:
-		height = H;		
-		square = M_PI * R * R + 2 * R * height;// считаем площадь фигуры		
-		volume = M_PI * R * R * height;// считаем объем фигуры
-		break;
-	default:
-		break;
-	}
+	square_ = abs(x1_ - x2_) * abs(y1_ - y2_);// считаем площадь фигуры
+};
+
+Cube::Cube(	int x1, int y1, int z1, int x2, int y2, int z2,
+			int x3, int y3, int z3, int x4, int y4, int z4,
+			int x5, int y5, int z5, int x6, int y6, int z6,
+			int x7, int y7, int z7, int x8, int y8, int z8) : Shape(cube),
+	x1_(x1), y1_(y1), z1_(z1), x2_(x2), y2_(y2), z2_(z2),
+	x3_(x3), y3_(y3), z3_(z3), x4_(x4), y4_(y4), z4_(z4),
+	x5_(x5), y5_(y5), z5_(z5), x6_(x6), y6_(y6), z6_(z6),
+	x7_(x7), y7_(y7), z7_(z7), x8_(x8), y8_(y8), z8_(z8)
+{
+	int a = abs(x1_ - x2_);
+	int b = abs(y1_ - y2_);
+	int c = abs(z1_ - z2_);
+	square_ = 2 * a * b + 2 * a * c + 2 * b * c;
+	volume_ = a * b * c;
+};
+
+Circle::Circle(int x1, int y1, double R) : Shape(circle), x1_(x1), y1_(y1), radius_(R)
+{
+	square_ = M_PI * radius_ * radius_;
+};
+
+Cylinder::Cylinder(int x1, int y1, double R, double H) : Shape(cylinder), x1_(x1), y1_(y1), radius_(R), height_(H)
+{
+	square_ = M_PI * radius_ * radius_ + 2 * radius_ * height_;// считаем площадь фигуры		
+	volume_ = M_PI * radius_ * radius_ * height_;// считаем объем фигуры
 }
